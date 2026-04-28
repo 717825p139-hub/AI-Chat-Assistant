@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sentiment Analysis System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+  <script src="{{ url_for('static', filename='java.js') }}"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <h2 class="sr-only">Sentiment Analysis System — interactive text analyzer</h2>
+    <div class="topbar">
+      <div class="logo">Senti<span>Lens</span></div>
+      <div class="badge">NLP + Deep Learning</div>
+    </div>
+
+    <div class="presets">
+      <span style="font-size:12px;color:var(--t2);align-self:center;font-family:'DM Mono',monospace;">Try:</span>
+      <button class="preset-btn" onclick="loadPreset(0)">positive review</button>
+      <button class="preset-btn" onclick="loadPreset(1)">negative feedback</button>
+      <button class="preset-btn" onclick="loadPreset(2)">neutral report</button>
+      <button class="preset-btn" onclick="loadPreset(3)">mixed opinion</button>
+    </div>
+
+    <div class="textarea-wrap">
+      <textarea id="inputText"
+        placeholder="Enter text to analyze — a review, social media post, customer feedback, or any opinion..."
+        oninput="updateChar()"></textarea>
+      <span class="char-count" id="charCount">0 / 500</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">Analyze Sentiment</button>
+      <button class="btn-clear" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div class="loading-overlay" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">Processing text...</div>
+    </div>
+
+    <div class="results" id="results">
+      <div class="sentiment-hero" id="heroCard">
+        <div class="sentiment-icon" id="heroIcon"></div>
+        <div>
+          <div class="sentiment-label" id="heroLabel"></div>
+          <div class="sentiment-sub" id="heroSub"></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-row">
+            <span class="score-name">positive</span>
+            <div class="bar-track">
+              <div class="bar-fill" id="posBar" style="background:var(--pos)"></div>
+            </div>
+            <span class="score-pct" id="posScore" style="color:var(--pos)"></span>
+          </div>
+          <div class="score-row">
+            <span class="score-name">neutral</span>
+            <div class="bar-track">
+              <div class="bar-fill" id="neuBar" style="background:var(--neu)"></div>
+            </div>
+            <span class="score-pct" id="neuScore" style="color:var(--neu)"></span>
+          </div>
+          <div class="score-row">
+            <span class="score-name">negative</span>
+            <div class="bar-track">
+              <div class="bar-fill" id="negBar" style="background:var(--neg)"></div>
+            </div>
+            <span class="score-pct" id="negScore" style="color:var(--neg)"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Confidence</div>
+          <div class="metric-val" id="metConf"></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Subjectivity</div>
+          <div class="metric-val" id="metSubj"></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Intensity</div>
+          <div class="metric-val" id="metInt"></div>
+        </div>
+      </div>
+
+      <div class="keywords-wrap">
+        <div class="kw-title">key signal words detected</div>
+        <div class="kw-tags" id="kwTags"></div>
+      </div>
+    </div>
+
+    <div class="history-wrap" id="historyWrap" style="display:none">
+      <div class="history-title">recent analyses</div>
+      <div class="history-list" id="historyList"></div>
+    </div>
+  </div>
+</body>
+
+</html>
